@@ -1,0 +1,34 @@
+﻿@model ASPNetTest.ViewModels.IndexUsersViewModel
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Наши пользователи.</h2>
+@if (Model.Users.Count == 0)
+{
+	<p>Пользователей не существует =(</p>
+}
+else
+{
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Наши пользователи</th>
+				<th>Скидка %</th>
+				<th>Название</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model.Users)
+			{
+				<tr>
+					<td>@Html.ActionLink(user.Name, "Edit", "Users", new { id = user.Id }, null)</td>
+					<td>@user.MembershipType.DiscountRate%</td>
+					<td>@user.MembershipType.Name</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+

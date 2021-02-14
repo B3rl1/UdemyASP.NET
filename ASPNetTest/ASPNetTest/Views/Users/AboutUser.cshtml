@@ -1,0 +1,33 @@
+﻿
+@model ASPNetTest.Models.User
+@{
+	ViewBag.Title = Model.Name;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Model.Name</h2>
+<ul>
+	<li>@Model.MembershipType.Name - @Model.MembershipType.DiscountRate</li>
+	@if(@Model.DateOfBirthDay != null)
+	{
+		<li>День рождения: @Model.DateOfBirthDay.Value.ToShortDateString()</li>
+	}
+</ul>
+
+@*<table class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th>@Model.Name</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach (var ship in Model.ShipList)
+		{
+			<tr>
+				<td>@ship.Id</td>
+				<td>@ship.Name</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+	*@
+

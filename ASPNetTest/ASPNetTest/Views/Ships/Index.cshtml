@@ -1,0 +1,36 @@
+﻿
+@model ASPNetTest.ViewModels.IndexUsersViewModel
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+	var className = Model.Users.Count > 5 ? "popular" : null;
+}
+<h2 class="@className">Наши пользователи</h2>
+
+@if (Model.Users.Count == 0)
+{
+	<p>Пользователей не существует =(</p>
+}
+
+<ul>
+	@foreach (var user in Model.Users)
+	{
+		<li>@user.Name</li>
+		<ul>
+		@foreach (var ship in user.ShipList)
+		{
+			<li>@ship.Name</li>
+		}
+		</ul>
+	}
+</ul>
+
+
+@*
+	Не использовать!
+	<h2>@((Ship)ViewData["Ship"]).Name)</h2>
+	<h2>@ViewBag.Ship</h2>
+*@

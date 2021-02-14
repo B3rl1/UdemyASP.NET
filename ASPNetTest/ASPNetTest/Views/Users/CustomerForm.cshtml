@@ -1,0 +1,36 @@
+﻿@model ASPNetTest.ViewModels.CustomerDataViewModel
+@{
+	ViewBag.Title = "New";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer</h2>
+
+@using (Html.BeginForm("Save", "Users"))
+{
+	<div class="form-group">
+		@Html.LabelFor(m => m.User.Name)
+		@Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.User.DateOfBirthDay)
+		@*<label for="DateOfBirthDay">Day of Birth</label> Измение имени в HTML*@
+		@Html.TextBoxFor(m => m.User.DateOfBirthDay, "{0:d MMM yyyy}", new { @class = "form-control" })
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.User.MembershipTypeId)
+		@Html.DropDownListFor(m => m.User.MembershipTypeId, new SelectList(Model.MembershipType, "Id", "Name"),"Select MembershipType", new { @class = "form-control" })
+	</div>
+
+	<div class="checkbox">
+		<label>
+			@Html.CheckBoxFor(m => m.User.IsSubscribedToNewsletter) Subscribed to Newsletter?
+		</label>
+	</div>
+
+	@Html.HiddenFor(m => m.User.Id)
+
+	<button type="submit" class="btn btn-primary">Save</button>
+}
