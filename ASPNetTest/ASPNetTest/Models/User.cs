@@ -11,11 +11,13 @@ namespace ASPNetTest.Models
 	{
 		public int Id { get; set; }
 
-		[Required] //Not-nullable строка
+		[Required(ErrorMessage = "Пожалуйста, введите имя пользователя")] //Not-nullable строка
 		[StringLength(255)] //Ограничение по длине записи.
 		public string Name { get; set; }
 
+
 		[Display(Name = "Date of Birth")] //Изменение отображение в HTML
+		[Min18YearsIfAMember]
 		public DateTime? DateOfBirthDay { get; set; }
 
 		public List<Ship> ShipList{ get; set; }
@@ -25,8 +27,15 @@ namespace ASPNetTest.Models
 		public MembershipType MembershipType { get; set; }
 
 		[Display(Name = "Membership Type")]
-		public byte MembershipTypeId { get; set; }
+		public byte MembershipTypeId { get; set; } //Поскольку данное поле имеет значимый тип, то оно по умолчанию требуется и делает ValidationError
 
+		//Аттрибуты данных для Validation
+		//[Range(1,10)] - Минимальное или максимальное значение для данного свойства.
+		//[Compare("OtherProperty")]
+		//[Phone]
+		//[EmailAddress]
+		//[Url]
+		//[RegularExpression("...")]
 
 	}
 }

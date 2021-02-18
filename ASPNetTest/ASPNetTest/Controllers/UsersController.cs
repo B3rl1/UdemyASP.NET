@@ -42,6 +42,7 @@ namespace ASPNetTest.Controllers
 
 	        var modelView = new CustomerDataViewModel()
 	        {
+				User = new User(),
 		        MembershipType = membershipTypes
 	        };
 
@@ -49,8 +50,21 @@ namespace ASPNetTest.Controllers
         }
 
         [HttpPost]
+		[ValidateAntiForgeryToken] //Вся работа по созданию, расшифровке и сопоставления токенов лежит за кулисами MVC Framework
         public ActionResult Save(User user)
         {
+
+	        if (!ModelState.IsValid)
+	        {
+		        var viewModel = new CustomerDataViewModel()
+		        {
+			        User = user,
+			        MembershipType = _context.MembershipTypes.ToList()
+		        };
+
+		        return View("CustomerForm", viewModel);
+	        }
+
 	        if (user.Id == 0)
 		        _context.Users.Add(user);
 	        else
@@ -62,12 +76,9 @@ namespace ASPNetTest.Controllers
 		        customerInDb.MembershipTypeId = user.MembershipTypeId;
 		        customerInDb.IsSubscribedToNewsletter = user.IsSubscribedToNewsletter;
 
-
 		        //Открывает новые дыры в защите
 		        //TryUpdateModel(customerInDb, "", new string[] {"Name", "Email"});//Обновление только Name и Email. Проблема в том, что если изменить названия свойств,
 		        //а здесь забыть, то программа не будет работать
-
-
 	        }
 			_context.SaveChanges();
 

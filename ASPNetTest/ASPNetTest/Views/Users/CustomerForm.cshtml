@@ -8,20 +8,24 @@
 
 @using (Html.BeginForm("Save", "Users"))
 {
+	@Html.ValidationSummary(true, "Пожалуйста устраните текущие проблемы.")
 	<div class="form-group">
 		@Html.LabelFor(m => m.User.Name)
 		@Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.User.Name)
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.User.MembershipTypeId)
+		@Html.DropDownListFor(m => m.User.MembershipTypeId, new SelectList(Model.MembershipType, "Id", "Name"), "Select MembershipType", new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.User.MembershipTypeId)
 	</div>
 
 	<div class="form-group">
 		@Html.LabelFor(m => m.User.DateOfBirthDay)
 		@*<label for="DateOfBirthDay">Day of Birth</label> Измение имени в HTML*@
 		@Html.TextBoxFor(m => m.User.DateOfBirthDay, "{0:d MMM yyyy}", new { @class = "form-control" })
-	</div>
-
-	<div class="form-group">
-		@Html.LabelFor(m => m.User.MembershipTypeId)
-		@Html.DropDownListFor(m => m.User.MembershipTypeId, new SelectList(Model.MembershipType, "Id", "Name"),"Select MembershipType", new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.User.DateOfBirthDay)
 	</div>
 
 	<div class="checkbox">
@@ -31,6 +35,13 @@
 	</div>
 
 	@Html.HiddenFor(m => m.User.Id)
+	@Html.AntiForgeryToken()//Против CRSF атака при перехвате сессии пользователя
 
 	<button type="submit" class="btn btn-primary">Save</button>
 }
+
+@section scripts
+{
+	@Scripts.Render("~/bundles/jqueryval")
+}
+

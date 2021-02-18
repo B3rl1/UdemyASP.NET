@@ -42,9 +42,8 @@ namespace ASPNetTest.Controllers
 	        if (movie == null)
 		        return HttpNotFound();
 
-	        var modelView = new MoviesDataViewModel()
+	        var modelView = new MoviesDataViewModel(movie)
 	        {
-		        Movie = movie,
 		        GenreTypes = _context.GenreTypes.ToList()
 	        };
 
@@ -52,8 +51,17 @@ namespace ASPNetTest.Controllers
         }
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+	        if (!ModelState.IsValid)
+	        {
+		        var modelView = new MoviesDataViewModel(movie)
+		        {
+			        GenreTypes = _context.GenreTypes.ToList()
+		        };
+	        }
+
 	        if (movie.Id == 0)
 		        _context.Movies.Add(movie);
 	        else
