@@ -210,3 +210,11 @@ W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\obj\Debug\ASPNetTest.csproj.CoreCom
 W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\obj\Debug\ASPNetTest.csproj.CopyComplete
 W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\obj\Debug\ASPNetTest.dll
 W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\obj\Debug\ASPNetTest.pdb
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\System.Net.Http.Formatting.dll
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\System.Web.Http.dll
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\System.Web.Http.WebHost.dll
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\System.Net.Http.Formatting.xml
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\System.Web.Http.xml
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\System.Web.Http.WebHost.xml
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\AutoMapper.dll
+W:\GITHUB\UdemyASP.NET\ASPNetTest\ASPNetTest\bin\AutoMapper.xml
