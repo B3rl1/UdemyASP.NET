@@ -28,12 +28,7 @@ namespace ASPNetTest.Controllers
 	    // GET: Users
         public ActionResult Index()
         {
-	        var users = _context.Users.Include(u => u.MembershipType).ToList();//Eager Loading, поскольку EF по стандарту не загружает внешние данные связанные с текущим объектом
-
-			var model = new IndexUsersViewModel();
-			model.Users = users.ToList();
-
-	        return View(model);
+	        return View();
         }
 
         public ActionResult New()

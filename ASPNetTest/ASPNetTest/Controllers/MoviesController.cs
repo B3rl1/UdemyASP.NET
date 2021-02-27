@@ -27,12 +27,7 @@ namespace ASPNetTest.Controllers
         // GET: Movies
         public ActionResult Index()
         {
-	        var movies = _context.Movies.Include(m => m.GenreType).ToList();
-
-			var modelView = new IndexMoviesDataViewModel();
-			modelView.Movie = movies;
-
-            return View(modelView);
+	        return View();
         }
 
         public ActionResult Edit(int id)

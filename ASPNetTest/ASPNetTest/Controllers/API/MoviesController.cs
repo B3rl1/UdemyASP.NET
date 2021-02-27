@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 using System.Web.Http;
 using ASPNetTest.Models;
 
@@ -20,7 +21,7 @@ namespace ASPNetTest.Controllers.API
         //GET api/movies
         public IHttpActionResult GetMovies()
         {
-	        var movies = _context.Movies.ToList();
+	        var movies = _context.Movies.Include(m => m.GenreType).ToList();
 
 	        if (movies.Count == 0)
 		        return NotFound();
@@ -74,7 +75,7 @@ namespace ASPNetTest.Controllers.API
 			return Ok(movie);
 		}
 
-		//DELETE /api/users/1
+		//DELETE /api/movies/1
 		[HttpDelete]
 		public IHttpActionResult DeleteMovie(int id)
 		{

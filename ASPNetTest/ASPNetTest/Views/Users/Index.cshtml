@@ -5,34 +5,83 @@
 }
 
 <h2>Наши пользователи.</h2>
-@if (Model.Users.Count == 0)
-{
-	<p>Пользователей не существует =(</p>
-}
-else
-{
-	<p>
-		@Html.ActionLink("New User", "New", "Users", null, new { @class = "btn btn-primary" })
-	</p>
 
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Наши пользователи</th>
-				<th>Скидка %</th>
-				<th>Название</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var user in Model.Users)
-			{
-				<tr>
-					<td>@Html.ActionLink(user.Name, "Edit", "Users", new { id = user.Id }, null)</td>
-					<td>@user.MembershipType.DiscountRate%</td>
-					<td>@user.MembershipType.Name</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+<p>
+	@Html.ActionLink("New User", "New", "Users", null, new {@class = "btn btn-primary"})
+</p>
+
+<table id="users" class="table table-bordered table-hover">
+	<thead>
+	<tr>
+		<th>Наши пользователи</th>
+		<th>Скидка %</th>
+		<th>Название</th>
+		<th>Удалить</th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+
+@section scripts
+{
+	<script>
+		$(document).ready(function () {
+			var table = $("#users").DataTable({
+				ajax: {
+					url: "/api/users",
+					dataSrc: ""
+				},
+				columns: [
+					{
+						data: "name",
+						render: function(data, type, user) {
+							return "<a href='/users/edit/" + user.id + "'>" + user.name + "</a>";
+						}
+					},
+					{
+						data: "membershipType.discountRate",
+						render: function(data) {
+							return data + "%";
+						}
+					},
+					{
+						data: "membershipType.name"
+					},
+					{
+						data: "id",
+						render: function(data) {
+							return "<button class='btn-link js-delete' data-user-id=" + data + ">Delete</button>";
+						}
+					}
+				]
+			});
+
+			$("#users").on("click",
+				".js-delete",
+				function() {
+					var button = $(this);
+
+					//Должен отвечать принципу единственной ответственности + необходимо вынести в JS файл
+					bootbox.confirm("Вы уверены что хотите удалить этого пользователя?",
+						function(result) {
+							if (result) {
+								$.ajax({
+									url: "/api/users/" + button.attr("data-user-id"),
+									method: "DELETE",
+									success: function() {
+										{
+											//Во время удаления записей, можно найти в поиске удаленную запись.
+											//Чтобы этого избежать нужно удалять не элемент на страничке, а из таблицы.
+											table.row(button.parents("tr")).remove().draw();
+											console.log("Success");
+										}
+									}
+								});
+							}
+						});
+				});
+		});
+	</script>
 }
 

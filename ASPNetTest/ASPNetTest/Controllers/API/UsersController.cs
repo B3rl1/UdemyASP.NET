@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http;
 using ASPNetTest.Models;
@@ -18,9 +19,12 @@ namespace ASPNetTest.Controllers.API
 	    }
 
 		// GET /api/users
-	    public IEnumerable<User> GetUsers()
+	    public IHttpActionResult GetUsers()
 	    {
-		    return _context.Users.ToList();
+		    var users = _context.Users
+			    .Include(u => u.MembershipType)
+			    .ToList();
+			return Ok(users);
 	    }
 
 		//GET /api/users/1
