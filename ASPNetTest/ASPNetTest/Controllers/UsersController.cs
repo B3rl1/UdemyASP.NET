@@ -11,7 +11,8 @@ using ASPNetTest.ViewModels;
 
 namespace ASPNetTest.Controllers
 {
-    public class UsersController : Controller
+	//[Authorize] //Данный аттрибут попросит войти, перед тем как получить доступ к функционалу сайта. Можно применять на отдельный метод или на всю группу.
+	public class UsersController : Controller
     {
 	    private ApplicationDbContext _context; //Название по соглашениям.
 
@@ -26,6 +27,7 @@ namespace ASPNetTest.Controllers
 	    }
 
 	    // GET: Users
+
         public ActionResult Index()
         {
 	        return View();

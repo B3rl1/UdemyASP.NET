@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ASPNetTest.Controllers
 {
+	[AllowAnonymous] //Позволяет просматривать функционал сайта, без логина на него
 	public class HomeController : Controller
 	{
 		public ActionResult Index()

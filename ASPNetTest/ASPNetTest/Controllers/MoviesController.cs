@@ -27,10 +27,18 @@ namespace ASPNetTest.Controllers
         // GET: Movies
         public ActionResult Index()
         {
-	        return View();
+	        if (User.IsInRole(RoleName.CanManageMovies))
+	        {
+		        return View("List");
+	        }
+	        else
+	        {
+		        return View("ReadOnlyList");
+	        }
         }
 
-        public ActionResult Edit(int id)
+        [Authorize(Roles = RoleName.CanManageMovies)]
+		public ActionResult Edit(int id)
         {
 	        var movie = _context.Movies.Include(m => m.GenreType).SingleOrDefault(m => m.Id == id);
 
@@ -47,7 +55,8 @@ namespace ASPNetTest.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-        public ActionResult Save(Movie movie)
+		[Authorize(Roles = RoleName.CanManageMovies)]
+		public ActionResult Save(Movie movie)
         {
 	        if (!ModelState.IsValid)
 	        {
@@ -81,6 +90,7 @@ namespace ASPNetTest.Controllers
 	        return RedirectToAction("Index", "Movies");
         }
 
+		[Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
 	        var genres = _context.GenreTypes.ToList();
