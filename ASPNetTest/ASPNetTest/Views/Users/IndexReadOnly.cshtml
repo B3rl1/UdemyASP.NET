@@ -1,0 +1,73 @@
+﻿@model ASPNetTest.ViewModels.IndexUsersViewModel
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Наши пользователи.</h2>
+
+<table id="users" class="table table-bordered table-hover">
+	<thead>
+	<tr>
+		<th>Наши пользователи</th>
+		<th>Скидка %</th>
+		<th>Название</th>
+	</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+
+@section scripts
+{
+	<script>
+		$(document).ready(function () {
+			var table = $("#users").DataTable({
+				ajax: {
+					url: "/api/users",
+					dataSrc: ""
+				},
+				columns: [
+					{
+						data: "name"
+					},
+					{
+						data: "membershipType.discountRate",
+						render: function(data) {
+							return data + "%";
+						}
+					},
+					{
+						data: "membershipType.name"
+					}
+				]
+			});
+
+			//$("#users").on("click",
+			//	".js-delete",
+			//	function() {
+			//		var button = $(this);
+
+			//		//Должен отвечать принципу единственной ответственности + необходимо вынести в JS файл
+			//		bootbox.confirm("Вы уверены что хотите удалить этого пользователя?",
+			//			function(result) {
+			//				if (result) {
+			//					$.ajax({
+			//						url: "/api/users/" + button.attr("data-user-id"),
+			//						method: "DELETE",
+			//						success: function() {
+			//							{
+			//								//Во время удаления записей, можно найти в поиске удаленную запись.
+			//								//Чтобы этого избежать нужно удалять не элемент на страничке, а из таблицы.
+			//								table.row(button.parents("tr")).remove().draw();
+			//								console.log("Success");
+			//							}
+			//						}
+			//					});
+			//				}
+			//			});
+			//	});
+		});
+	</script>
+}
+

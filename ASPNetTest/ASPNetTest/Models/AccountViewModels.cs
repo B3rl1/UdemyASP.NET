@@ -5,18 +5,7 @@ using System.Web.Services.Protocols;
 
 namespace ASPNetTest.Models
 {
-    public class ExternalLoginConfirmationViewModel
-    {
-        [Required]
-        [Display(Name = "Адрес электронной почты")]
-        public string Email { get; set; }
-
-        [Required]
-        [Display(Name = "Водительское удостоверение")]
-        public string DrivingLicense { get; set; }
-    }
-
-    public class ExternalLoginListViewModel
+	public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
     }

@@ -29,10 +29,13 @@ namespace ASPNetTest.Controllers
 	    // GET: Users
 
         public ActionResult Index()
-        {
-	        return View();
+		{
+			if(User.IsInRole(RoleName.CanManageMovies))
+				return View("Index");
+			return View("IndexReadOnly");
         }
 
+		[Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
 	        var membershipTypes = _context.MembershipTypes.ToList();
@@ -48,7 +51,8 @@ namespace ASPNetTest.Controllers
 
         [HttpPost]
 		[ValidateAntiForgeryToken] //Вся работа по созданию, расшифровке и сопоставления токенов лежит за кулисами MVC Framework
-        public ActionResult Save(User user)
+		[Authorize(Roles = RoleName.CanManageMovies)]
+		public ActionResult Save(User user)
         {
 
 	        if (!ModelState.IsValid)
@@ -82,7 +86,8 @@ namespace ASPNetTest.Controllers
 	        return RedirectToAction("Index","Users");
         }
 
-        public ActionResult AboutUser(int id)
+		[Authorize(Roles = RoleName.CanManageMovies)]
+		public ActionResult AboutUser(int id)
         {
 	        var user = _context.Users.Include(u => u.MembershipType).SingleOrDefault(us => us.Id == id);
 
@@ -91,7 +96,8 @@ namespace ASPNetTest.Controllers
 	        return View(user);
         }
 
-        public ActionResult Edit(int id)
+		[Authorize(Roles = RoleName.CanManageMovies)]
+		public ActionResult Edit(int id)
         {
 	        var user = _context.Users.Include(u => u.MembershipType).SingleOrDefault(u => u.Id == id);
 
